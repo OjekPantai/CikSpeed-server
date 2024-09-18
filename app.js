@@ -4,6 +4,9 @@ import dotenv from "dotenv";
 import helmet from "helmet";
 import ExpressMongoSanitize from "express-mongo-sanitize";
 import cookieParser from "cookie-parser";
+import path from "path";
+import { fileURLToPath } from "url"; // Import untuk mendapatkan dirname
+
 import { notFound, errorHandler } from "./middlewares/errorMiddleware.js";
 
 import authRouter from "./routes/authRouter.js";
@@ -14,6 +17,10 @@ dotenv.config();
 const port = process.env.PORT || 3000;
 
 const app = express();
+
+// Untuk mendapatkan __dirname secara manual
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 app.use(express.json());
 app.use(cookieParser());
@@ -26,7 +33,7 @@ app.use("/api/v1/services", serviceRouter);
 app.use("/api/v1/orders", orderRouter);
 
 app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/views/index.html");
+  res.sendFile(path.join(__dirname, "views", "index.html")); // Menggunakan path.join untuk merapikan path
 });
 
 app.use(notFound);
