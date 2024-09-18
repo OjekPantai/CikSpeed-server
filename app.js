@@ -25,6 +25,10 @@ app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/services", serviceRouter);
 app.use("/api/v1/orders", orderRouter);
 
+app.get("/", (req, res) => {
+  res.send("Server is running 🚀");
+});
+
 app.use(notFound);
 app.use(errorHandler);
 
