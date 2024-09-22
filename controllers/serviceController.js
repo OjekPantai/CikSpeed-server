@@ -26,12 +26,12 @@ export const getAllService = asyncHandler(async (req, res) => {
 
   // Pagination
   const page = parseInt(req.query.page) || 1;
-  const limitData = parseInt(req.query.limit) || 30;
+  const limitData = parseInt(req.query.limit) || 10;
   const skipData = (page - 1) * limitData;
 
   query = query.skip(skipData).limit(limitData);
 
-  const countService = await Service.countDocuments();
+  const countService = await Service.countDocuments(queryObj);
 
   if (req.query.page && skipData >= countService) {
     res.status(404);
@@ -39,11 +39,16 @@ export const getAllService = asyncHandler(async (req, res) => {
   }
 
   const services = await query;
+  const totalPage = Math.ceil(countService / limitData);
 
   return res.status(200).json({
     message: "Success",
     data: services,
-    count: countService,
+    pagination: {
+      totalPage,
+      page,
+      totalService: countService,
+    },
   });
 });
 
