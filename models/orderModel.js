@@ -31,7 +31,12 @@ const orderSchema = new Schema(
     ],
     status: {
       type: String,
-      enum: ["menunggu konfirmasi", "dalam antrian", "selesai"],
+      enum: [
+        "menunggu konfirmasi",
+        "dalam antrian",
+        "sedang dikerjakan",
+        "selesai",
+      ],
       default: "menunggu konfirmasi",
     },
     name: {

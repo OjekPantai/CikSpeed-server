@@ -132,7 +132,12 @@ export const getOrder = asyncHandler(async (req, res) => {
 export const updateOrder = asyncHandler(async (req, res) => {
   const { status } = req.body;
 
-  const validStatuses = ["menunggu konfirmasi", "dalam antrian", "selesai"];
+  const validStatuses = [
+    "menunggu konfirmasi",
+    "dalam antrian",
+    "sedang dikerjakan",
+    "selesai",
+  ];
   if (!validStatuses.includes(status)) {
     res.status(400);
     throw new Error("Invalid status value");
